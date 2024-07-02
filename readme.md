@@ -67,7 +67,7 @@ You can collect your own fonts from the following web site (for non-commercial p
 
 - [https://www.foundertype.com/index.php/FindFont/index](https://www.foundertype.com/index.php/FindFont/index) (acknowledgement: [DG-Font](https://github.com/ecnuycxie/DG-Font) and [FFG-benchmarks](https://github.com/clovaai/fewshot-font-generation) refer this web site)
 
-We also provide an example of dataset structure in the folder "dataset". 
+We also provide an example of dataset structure in the folder "fontdata_example". 
 
 
 ## 4. Training
