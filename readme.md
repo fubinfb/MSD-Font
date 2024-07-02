@@ -76,7 +76,7 @@ Different from GAN-based Font Generation Methods, the diffusion based model need
 
 ##### Modify the configuration file
 
-The configuration file: configs/latent-diffusion/MSDFont_Train_Stage1_trans_model_predx0_miniUnet.yaml
+The configuration file: configs/MSDFont/MSDFont_Train_Stage1_trans_model_predx0_miniUnet.yaml
 
 Please read and modify the configuration file: 
 ```
