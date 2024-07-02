@@ -100,7 +100,7 @@ CUDA_VISIBLE_DEVICES=GPUID python main.py --base configs/latent-diffusion/MSDFon
 
 ##### Modify the configuration file
 
-The configuration file: configs/latent-diffusion/MSDFont_Train_Stage1_rec_model_predx0_miniUnet.yaml
+The configuration file: configs/MSDFont/MSDFont_Train_Stage1_rec_model_predx0_miniUnet.yaml
 
 Please read and modify the configuration file: 
 ```
@@ -113,7 +113,7 @@ and you can also modify other settings in this file.
 
 ##### Run training script
 ```
-CUDA_VISIBLE_DEVICES=GPUID python main.py --base configs/latent-diffusion/MSDFont_Train_Stage1_rec_model_predx0_miniUnet.yaml -t --gpus 0,
+CUDA_VISIBLE_DEVICES=GPUID python main.py --base configs/MSDFont/MSDFont_Train_Stage1_rec_model_predx0_miniUnet.yaml -t --gpus 0,
 ```
 
 ### 4.3. Stage 2: Using $\tilde{z}_{\theta_1}^{(g,1)}(\tilde{z}_t,t,y_1)$ to finetune $E_c^2$, $E_s^2$, and $\tilde{z}_{\theta_2}^{(g,2)}(\tilde{z}_t,t,y_2)$ for Font Refinement Stage
