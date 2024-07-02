@@ -47,8 +47,7 @@ cd ..
 git clone https://github.com/Stability-AI/stablediffusion.git  
 cp -fr ./stablediffusion/* ./MSDFont/ # copy and cover the files
 cd MSDFont
-#conda install pytorch==1.12.1 torchvision==0.13.1 -c pytorch
-#pip install transformers==4.19.2 diffusers invisible-watermark
+pip install diffusers invisible-watermark
 pip install -e .
 #conda install xformers -c xformers      # option, more efficiency and speed on GPUs
 #################### MSD-Font ##########################
