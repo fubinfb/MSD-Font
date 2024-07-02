@@ -116,7 +116,7 @@ and you can also modify other settings in this file.
 CUDA_VISIBLE_DEVICES=GPUID python main.py --base configs/MSDFont/MSDFont_Train_Stage1_rec_model_predx0_miniUnet.yaml -t --gpus 0,
 ```
 
-### 4.3. Stage 2: Using $\tilde{z}_{\theta_1}^{(g,1)}(\tilde{z}_t,t,y_1)$ to finetune $E_c^2$, $E_s^2$, and $\tilde{z}_{\theta_2}^{(g,2)}(\tilde{z}_t,t,y_2)$ for Font Refinement Stage
+### 4.3. Stage 2: Finetune $E_c^2$, $E_s^2$, and $\tilde{z}_{\theta_2}^{(g,2)}(\tilde{z}_t,t,y_2)$ for Font Refinement Stage
 
 We will release this code before 2024.7.14.
 
