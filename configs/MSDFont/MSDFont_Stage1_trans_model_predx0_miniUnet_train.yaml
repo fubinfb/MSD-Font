@@ -79,8 +79,8 @@ data:
       target: taming.data.MSDFont_data_ttf.FontTTFTrain
       params:
         size: 128
-        data_dirs: "/home/fubin/FontData/chn/ttfs/train_s1"
-        train_chars: "/home/fubin/FontData/chn/train_chars800.json"
+        data_dirs: "/home/fubin/FontData/chn/ttfs/train_font"
+        train_chars: "/home/fubin/FontData/chn/train_chars.json"
         source_path: "/home/fubin/FontData/chn/source.ttf"
 
 
