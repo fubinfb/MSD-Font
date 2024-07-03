@@ -53,7 +53,7 @@ pip install -e .
 #################### MSD-Font ##########################
 cd .. 
 git clone https://github.com/fubinfb/MSD-Font.git
-cp -fr ./stablediffusion/* ./MSDFont/ # copy and cover the files
+cp -fr ./MSD-Font/* ./MSDFont/ # copy and cover the files
 pip install fonttools
 pip install Pillow==9.5.0   # please make sure the version of Pillow <= 9.5.0
 ```
