@@ -92,7 +92,7 @@ and you can also modify other settings in this file.
 
 ##### Run training script
 ```
-CUDA_VISIBLE_DEVICES=GPUID python main.py --base configs/latent-diffusion/MSDFont_Train_Stage1_trans_model_predx0_miniUnet.yaml -t --gpus 0,
+CUDA_VISIBLE_DEVICES=GPUID python main.py --base configs/MSDFont/MSDFont_Train_Stage1_trans_model_predx0_miniUnet.yaml -t --gpus 0,
 ```
 
 
