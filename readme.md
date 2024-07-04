@@ -73,7 +73,7 @@ We also provide an example of dataset structure in the folder "fontdata_example"
 ## 4. Training
 Different from GAN-based Font Generation Methods, the diffusion based model needs more training steps to converge, since the diffusion model has additional dimention "time (diffusion step)" need to be optimized. In our model, we keep training our model and save the model every two epochs. We recommend to optimize the model at least 80 epoches for better converged. 
 
-In our model, we use VQ-VAE encoder to project font images into latent space. The parameters of VQ-VAE are provided in [v2-1_512-ema-pruned.ckpt]([https://github.com/ecnuycxie/DG-Font](https://huggingface.co/stabilityai/stable-diffusion-2-1-base/blob/main/v2-1_512-ema-pruned.ckpt). 
+In our model, we use VQ-VAE encoder to project font images into latent space. The parameters of VQ-VAE are provided in [v2-1_512-ema-pruned.ckpt](https://huggingface.co/stabilityai/stable-diffusion-2-1-base/blob/main/v2-1_512-ema-pruned.ckpt). 
 
 ### 4.1. Stage 1-1: Training the $E_c^1$, $E_s^1$, and $\tilde{z}_{\theta_1}^{(g,1)}(\tilde{z}_t,t,y_1)$ for Font Transer Stage
 
