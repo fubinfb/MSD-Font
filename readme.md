@@ -13,7 +13,7 @@ Few-shot font generation (FFG) produces stylized font images with a limited numb
 ## 1. TODO List
 - [x] Add stage 1 training script. 
 - [x] Add stage 2 training script. 
-- [ ] Add inference (sampling) script. （before 2024.7.10）
+- [x] Add inference (sampling) script. 
 
 ## 2. Prerequisites
 
@@ -126,9 +126,7 @@ After finish the stage 1 training, we use $E_c^1$, $E_s^1$, and $\tilde{z}_{\the
 As pytorch-lightning not soppurt this opperation, we need:
 
 (1). add the script"./add_files/ddp_distri.py" to your conda envs: in the file "~/anaconda3/envs/MSDFont/lib/python3.8/site-packages/pytorch_lightning/strategies/", 
-
 (2). modify the "/home/fubin/anaconda3/envs/MSDFont/lib/python3.8/site-packages/pytorch_lightning/strategies/\_\_init\_\_.py" from:
-
 ```
 from pytorch_lightning.strategies.bagua import BaguaStrategy  # noqa: F401
 from pytorch_lightning.strategies.ddp import DDPStrategy  # noqa: F401
@@ -209,7 +207,29 @@ CUDA_VISIBLE_DEVICES=GPUID1,GPUID2 python main_distri.py --base configs/MSDFont/
 
 ## 5. Inference
 
-We will release this code before 2024.7.14. 
+##### Modify the configuration file
+
+The configuration file: infer_MSDFont.sh
+
+Please read and modify the configuration file: 
+```
+--outdir output file, eg: results/infer_result \
+--path_genchar target characters, eg: FontData/chn/eval_unseen_chars.json \
+--path_refchar reference characters, eg: FontData/chn/ref_chars.json \
+--path_ttf target font, eg: FontData/chn/ttfs/infer_unseen_font \
+--source_path source font, eg: FontData/chn/source.ttf \
+--path_config_rec config of rec model, provided in: configs/MSDFont/MSDFont_Eval_rec_model_predx0_miniUnet.yaml \
+--path_rec_model the path of the saved model in Stage 1-2, eg: logs/rec_stage_epoch=79-step=799999.ckpt \
+--path_config_trans config of trans model, provided in: configs/MSDFont/MSDFont_Eval_trans_model_predx0_miniUnet.yaml \
+--path_trans_model the path of the saved model in Stage 1-1, eg: logs/trans_stage_epoch=79-step=799999.ckpt
+```
+and you can also modify other settings in this file. 
+
+##### Run training script
+```
+sh infer_MSDFont.sh
+```
+
 
 
 ## Code license
