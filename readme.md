@@ -12,7 +12,7 @@ Few-shot font generation (FFG) produces stylized font images with a limited numb
 
 ## 1. TODO List
 - [x] Add stage 1 training script. 
-- [ ] Add stage 2 training script. （before 2024.7.10）
+- [x] Add stage 2 training script. 
 - [ ] Add inference (sampling) script. （before 2024.7.10）
 
 ## 2. Prerequisites
@@ -121,7 +121,89 @@ CUDA_VISIBLE_DEVICES=GPUID python main.py --base configs/MSDFont/MSDFont_Train_S
 
 ### 4.3. Stage 2: Finetune $E_c^2$, $E_s^2$, and $\tilde{z}_{\theta_2}^{(g,2)}(\tilde{z}_t,t,y_2)$ for Font Refinement Stage
 
-We will release this code before 2024.7.14.
+After finish the stage 1 training, we use $E_c^1$, $E_s^1$, and $\tilde{z}_{\theta_1}^{(g,1)}(\tilde{z}_t,t,y_1)$ to finture $E_c^2$, $E_s^2$, and $\tilde{z}_{\theta_2}^{(g,2)}(\tilde{z}_t,t,y_2)$ in stage 2. To keep the batch size same with stage 1, we use model parallel in this stage by putting above two set of models into two different GPUs. 
+
+As pytorch-lightning not soppurt this opperation, we need:
+
+(1). add the script"./add_files/ddp_distri.py" to your conda envs: in the file "~/anaconda3/envs/MSDFont/lib/python3.8/site-packages/pytorch_lightning/strategies/", 
+(2). modify the "/home/fubin/anaconda3/envs/MSDFont/lib/python3.8/site-packages/pytorch_lightning/strategies/\_\_init\_\_.py" from:
+```
+from pytorch_lightning.strategies.bagua import BaguaStrategy  # noqa: F401
+from pytorch_lightning.strategies.ddp import DDPStrategy  # noqa: F401
+from pytorch_lightning.strategies.ddp2 import DDP2Strategy  # noqa: F401
+from pytorch_lightning.strategies.ddp_spawn import DDPSpawnStrategy  # noqa: F401
+from pytorch_lightning.strategies.deepspeed import DeepSpeedStrategy  # noqa: F401
+from pytorch_lightning.strategies.dp import DataParallelStrategy  # noqa: F401
+from pytorch_lightning.strategies.fully_sharded import DDPFullyShardedStrategy  # noqa: F401
+from pytorch_lightning.strategies.horovod import HorovodStrategy  # noqa: F401
+from pytorch_lightning.strategies.hpu_parallel import HPUParallelStrategy  # noqa: F401
+from pytorch_lightning.strategies.ipu import IPUStrategy  # noqa: F401
+from pytorch_lightning.strategies.parallel import ParallelStrategy  # noqa: F401
+from pytorch_lightning.strategies.sharded import DDPShardedStrategy  # noqa: F401
+from pytorch_lightning.strategies.sharded_spawn import DDPSpawnShardedStrategy  # noqa: F401
+from pytorch_lightning.strategies.single_device import SingleDeviceStrategy  # noqa: F401
+from pytorch_lightning.strategies.single_hpu import SingleHPUStrategy  # noqa: F401
+from pytorch_lightning.strategies.single_tpu import SingleTPUStrategy  # noqa: F401
+from pytorch_lightning.strategies.strategy import Strategy  # noqa: F401
+from pytorch_lightning.strategies.strategy_registry import call_register_strategies, StrategyRegistry  # noqa: F401
+from pytorch_lightning.strategies.tpu_spawn import TPUSpawnStrategy  # noqa: F401
+
+STRATEGIES_BASE_MODULE = "pytorch_lightning.strategies"
+
+call_register_strategies(STRATEGIES_BASE_MODULE)
+```
+to
+```
+from pytorch_lightning.strategies.bagua import BaguaStrategy  # noqa: F401
+from pytorch_lightning.strategies.ddp import DDPStrategy  # noqa: F401
+from pytorch_lightning.strategies.ddp2 import DDP2Strategy  # noqa: F401
+from pytorch_lightning.strategies.ddp_spawn import DDPSpawnStrategy  # noqa: F401
+from pytorch_lightning.strategies.deepspeed import DeepSpeedStrategy  # noqa: F401
+from pytorch_lightning.strategies.dp import DataParallelStrategy  # noqa: F401
+from pytorch_lightning.strategies.fully_sharded import DDPFullyShardedStrategy  # noqa: F401
+from pytorch_lightning.strategies.horovod import HorovodStrategy  # noqa: F401
+from pytorch_lightning.strategies.hpu_parallel import HPUParallelStrategy  # noqa: F401
+from pytorch_lightning.strategies.ipu import IPUStrategy  # noqa: F401
+from pytorch_lightning.strategies.parallel import ParallelStrategy  # noqa: F401
+from pytorch_lightning.strategies.sharded import DDPShardedStrategy  # noqa: F401
+from pytorch_lightning.strategies.sharded_spawn import DDPSpawnShardedStrategy  # noqa: F401
+from pytorch_lightning.strategies.single_device import SingleDeviceStrategy  # noqa: F401
+from pytorch_lightning.strategies.single_hpu import SingleHPUStrategy  # noqa: F401
+from pytorch_lightning.strategies.single_tpu import SingleTPUStrategy  # noqa: F401
+from pytorch_lightning.strategies.strategy import Strategy  # noqa: F401
+from pytorch_lightning.strategies.strategy_registry import call_register_strategies, StrategyRegistry  # noqa: F401
+from pytorch_lightning.strategies.tpu_spawn import TPUSpawnStrategy  # noqa: F401
+from pytorch_lightning.strategies.ddp_distri import DDP_Distri_Strategy  #### add this line for model parallel
+
+STRATEGIES_BASE_MODULE = "pytorch_lightning.strategies"
+
+call_register_strategies(STRATEGIES_BASE_MODULE)
+```
+
+##### Modify the configuration file
+
+The configuration file: configs/MSDFont/MSDFont_Train_Stage2_rec_model_predx0_miniUnet_distri.yaml
+
+Please read and modify the configuration file: 
+```
+edit_t1: the value of t1, keep the same with Stage 1-1 
+edit_t2: the value of t2, keep the same with Stage 1-1 
+ckpt_path: the path of the saved model in Stage 1-2, eg: logs/rec_stage_epoch=79-step=799999.ckpt
+data_dirs: the path of the training set
+train_chars: the path of the json file for training characters
+source_path: the path of the ttf file for source font
+
+trans_model_config:
+      config_path: the config for Stage 1-1, eg: "configs/MSDFont/MSDFont_Train_Stage1_trans_model_predx0_miniUnet.yaml"
+      model_path: the path of the saved model in Stage 1-1, eg: "logs/trans_stage_epoch=79-step=799999.ckpt"
+```
+and you can also modify other settings in this file. 
+
+##### Run training script
+```
+CUDA_VISIBLE_DEVICES=GPUID1,GPUID2 python main_distri.py --base configs/MSDFont/MSDFont_Train_Stage2_rec_model_predx0_miniUnet_distri.yaml -t --gpus 0,
+```
+
 
 ## 5. Inference
 
