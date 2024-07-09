@@ -225,7 +225,7 @@ Please read and modify the configuration file:
 ```
 and you can also modify other settings in this file. 
 
-##### Run training script
+##### Run script
 ```
 sh infer_MSDFont.sh
 ```
