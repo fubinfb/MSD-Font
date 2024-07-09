@@ -126,7 +126,9 @@ After finish the stage 1 training, we use $E_c^1$, $E_s^1$, and $\tilde{z}_{\the
 As pytorch-lightning not soppurt this opperation, we need:
 
 (1). add the script"./add_files/ddp_distri.py" to your conda envs: in the file "~/anaconda3/envs/MSDFont/lib/python3.8/site-packages/pytorch_lightning/strategies/", 
+
 (2). modify the "/home/fubin/anaconda3/envs/MSDFont/lib/python3.8/site-packages/pytorch_lightning/strategies/\_\_init\_\_.py" from:
+
 ```
 from pytorch_lightning.strategies.bagua import BaguaStrategy  # noqa: F401
 from pytorch_lightning.strategies.ddp import DDPStrategy  # noqa: F401
