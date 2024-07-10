@@ -128,7 +128,7 @@ As pytorch-lightning not soppurt this opperation, we need:
 
 (1). add the script"./add_files/ddp_distri.py" to your conda envs: in the file "~/anaconda3/envs/MSDFont/lib/python3.8/site-packages/pytorch_lightning/strategies/", 
 
-(2). modify the "/home/fubin/anaconda3/envs/MSDFont/lib/python3.8/site-packages/pytorch_lightning/strategies/\_\_init\_\_.py" from:
+(2). modify the "~/anaconda3/envs/MSDFont/lib/python3.8/site-packages/pytorch_lightning/strategies/\_\_init\_\_.py" from:
 
 ```
 from pytorch_lightning.strategies.bagua import BaguaStrategy  # noqa: F401
