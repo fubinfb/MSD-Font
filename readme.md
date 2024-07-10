@@ -24,6 +24,7 @@ Our model is based on the LDM and Stable Diffusion platform, and you can use the
 git clone https://github.com/CompVis/latent-diffusion.git   
 mv ./latent-diffusion ./MSDFont      # change the folder's name
 conda create -n MSDFont python=3.8.5
+conda activate MSDFont
 pip3 install torch torchvision torchaudio
 pip install numpy
 pip install albumentations
