@@ -222,7 +222,7 @@ Please read and modify the configuration file:
 --path_ttf target font, eg: FontData/chn/ttfs/infer_unseen_font \
 --source_path source font, eg: FontData/chn/source.ttf \
 --path_config_rec config of rec model, provided in: configs/MSDFont/MSDFont_Eval_rec_model_predx0_miniUnet.yaml \
---path_rec_model the path of the saved model in Stage 2, eg: logs/rec_stage_epoch=79-step=799999.ckpt \
+--path_rec_model the path of the saved model in Stage 2, eg: logs/rec_stage2_epoch=79-step=799999.ckpt \
 --path_config_trans config of trans model, provided in: configs/MSDFont/MSDFont_Eval_trans_model_predx0_miniUnet.yaml \
 --path_trans_model the path of the saved model in Stage 1-1, eg: logs/trans_stage_epoch=79-step=799999.ckpt
 ```
