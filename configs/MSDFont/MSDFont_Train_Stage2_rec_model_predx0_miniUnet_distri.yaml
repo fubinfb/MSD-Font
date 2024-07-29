@@ -20,7 +20,7 @@ model:
     scale_factor: 0.18215
     use_ema: False 
     # ckpt_path: /home/fubin/StableDiffusion/checkpoints/v2-1_512-ema-pruned.ckpt
-    ckpt_path: /home/fubin/StableDiffusion/logs/rec_stage_epoch=79-step=799999.ckpt
+    ckpt_path: /home/fubin/StableDiffusion/logs/rec_stage_epoch=79.ckpt
 
     unet_config:
       target: ldm.modules.diffusionmodules.openaimodel.UNetModel
@@ -45,7 +45,7 @@ model:
       target: ldm.models.autoencoder.AutoencoderKL
       params:
         # ckpt_path: /home/fubin/StableDiffusion/checkpoints/v2-1_512-ema-pruned.ckpt
-        ckpt_path: /home/fubin/StableDiffusion/logs/rec_stage_epoch=79-step=799999.ckpt
+        ckpt_path: /home/fubin/StableDiffusion/logs/rec_stage_epoch=79.ckpt
         embed_dim: 4
         monitor: val/rec_loss
         ddconfig:
@@ -73,7 +73,7 @@ model:
 
     trans_model_config:
       config_path: "configs/MSDFont/MSDFont_Train_Stage1_trans_model_predx0_miniUnet.yaml"
-      model_path: "logs/2024-07-08T19-04-33_MSDFont_Train_Stage1_trans_model_predx0_miniUnet/checkpoints/epoch=7-step=80000.ckpt"
+      model_path: "/home/fubin/StableDiffusion/logs/trans_epoch=79.ckpt"
 
 data:
   target: main.DataModuleFromConfig
