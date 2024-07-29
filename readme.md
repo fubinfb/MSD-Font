@@ -191,14 +191,14 @@ Please read and modify the configuration file:
 ```
 edit_t1: the value of t1, keep the same with Stage 1-1 
 edit_t2: the value of t2, keep the same with Stage 1-1 
-ckpt_path: the path of the saved model in Stage 1-2, eg: logs/rec_stage_epoch=79-step=799999.ckpt
+ckpt_path: the path of the saved model in Stage 1-2, eg: logs/rec_stage_epoch=79.ckpt
 data_dirs: the path of the training set
 train_chars: the path of the json file for training characters
 source_path: the path of the ttf file for source font
 
 trans_model_config:
       config_path: the config for Stage 1-1, eg: "configs/MSDFont/MSDFont_Train_Stage1_trans_model_predx0_miniUnet.yaml"
-      model_path: the path of the saved model in Stage 1-1, eg: "logs/trans_stage_epoch=79-step=799999.ckpt"
+      model_path: the path of the saved model in Stage 1-1, eg: "logs/trans_stage_epoch=79.ckpt"
 ```
 and you can also modify other settings in this file. 
 
@@ -222,9 +222,9 @@ Please read and modify the configuration file:
 --path_ttf target font, eg: FontData/chn/ttfs/infer_unseen_font \
 --source_path source font, eg: FontData/chn/source.ttf \
 --path_config_rec config of rec model, provided in: configs/MSDFont/MSDFont_Eval_rec_model_predx0_miniUnet.yaml \
---path_rec_model the path of the saved model in Stage 2, eg: logs/rec_stage2_epoch=79-step=799999.ckpt \
+--path_rec_model the path of the saved model in Stage 2, eg: logs/rec_stage2_epoch=79.ckpt \
 --path_config_trans config of trans model, provided in: configs/MSDFont/MSDFont_Eval_trans_model_predx0_miniUnet.yaml \
---path_trans_model the path of the saved model in Stage 1-1, eg: logs/trans_stage_epoch=79-step=799999.ckpt
+--path_trans_model the path of the saved model in Stage 1-1, eg: logs/trans_stage_epoch=79.ckpt
 ```
 and you can also modify other settings in this file. 
 
