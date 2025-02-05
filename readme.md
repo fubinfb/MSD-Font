@@ -122,7 +122,7 @@ CUDA_VISIBLE_DEVICES=GPUID python main.py --base configs/MSDFont/MSDFont_Train_S
 
 ### 4.3. Stage 2: Finetune $E_c^2$, $E_s^2$, and $\tilde{z}_{\theta_2}^{(g,2)}(\tilde{z}_t,t,y_2)$ for Font Refinement Stage
 
-***Note: This code may not be available for training in the "Computing Cluster"***. 
+***Note: This code may not be available for training in the "Computing Cluster"***, please refer to the issue: https://github.com/fubinfb/MSD-Font/issues/6 
 
 After finish the stage 1 training, we use $E_c^1$, $E_s^1$, and $\tilde{z}_{\theta_1}^{(g,1)}(\tilde{z}_t,t,y_1)$ to finture $E_c^2$, $E_s^2$, and $\tilde{z}_{\theta_2}^{(g,2)}(\tilde{z}_t,t,y_2)$ in stage 2. To keep the batch size same with stage 1, we use model parallel in this stage by putting above two set of models into two different GPUs. Note: This stage is easy to overfit, it is better to only train 5 to 20 epoches.  
 
