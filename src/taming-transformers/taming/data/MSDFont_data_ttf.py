@@ -28,9 +28,9 @@ class BaseDataset(Dataset):
             self.data_dirs = data_dirs
         else:
             raise TypeError(f"The type of data_dirs is invalid: {type(data_dirs)}")
-
-        self.use_ttf = (extension == "ttf")
-        if self.use_ttf:
+            
+        self.extension = extension
+        if self.extension == "ttf":
             self.load_ttf_data(chars, extension, n_font)
         else:
             self.load_img_data(chars, extension, n_font)
@@ -55,8 +55,8 @@ class BaseDataset(Dataset):
 
     def load_img_data(self, chars, extension, n_font):
         self.key_dir_dict, self.key_char_dict = load_img_data(self.data_dirs, char_filter=chars, extension=extension, n_font=n_font)
-        self.extension = extension
         self.get_img = self.load_img
+        self.get_Greyimg = self.load_img_grey
 
     def render_from_ttf(self, key, char):
         font = self.key_font_dict[key]
@@ -75,10 +75,19 @@ class BaseDataset(Dataset):
 
     def load_img(self, key, char):
         img_dir = self.key_dir_dict[key][char]
-        img = Image.open(str(img_dir / f"{char}.{self.extension}"))
+        img = Image.open(str(img_dir / f"{char}.{self.extension}")).convert("RGB")
         img = self.transform(img)
+        img = img.permute(1,2,0)
         return img
 
+    def load_img_grey(self, key, char):
+        img_dir = self.key_dir_dict[key][char]
+        img = Image.open(str(img_dir / f"{char}.{self.extension}")).convert("L")
+        img = self.transform(img)
+        img = img.permute(1,2,0)
+        return img
+
+    
 
 class BaseTrainDataset(BaseDataset):
     def __init__(self, *args, **kwargs):
@@ -101,7 +110,10 @@ class FontTTFTrain(BaseTrainDataset):
         self.n_chars = len(self.chars)  
         self.n_fonts = len(self.keys)   
 
-        self.source = read_font(source_path)
+        if self.extension == "ttf":
+            self.source = read_font(source_path) # source_path
+        else:
+            self.source= source_path
 
     def render_from_source(self, char):
         img = render(self.source, char)
@@ -112,6 +124,20 @@ class FontTTFTrain(BaseTrainDataset):
     
     def render_from_source_Grey(self, char):
         img = render(self.source, char)
+        img = self.transform(img)
+        img = img.permute(1,2,0)
+        return img
+    
+    def read_from_source(self, char):
+        image_path = f"{self.source}/{char}.png"
+        img = Image.open(image_path).convert("RGB")
+        img = self.transform(img)
+        img = img.permute(1,2,0)
+        return img
+
+    def read_from_sourceGrey(self, char):
+        image_path = f"{self.source}/{char}.png"
+        img = Image.open(image_path).convert("L")
         img = self.transform(img)
         img = img.permute(1,2,0)
         return img
@@ -139,14 +165,21 @@ class FontTTFTrain(BaseTrainDataset):
         index = i
         key, char = self.data_list[index]
 
-        trg_img = self.get_RGBimg(key, char) # 128, 128, 3
+        if self.extension == "ttf":
+            trg_img = self.get_RGBimg(key, char) # 128, 128, 3
+        else:
+            trg_img = self.get_img(key, char)
 
         style_chars = set(self.key_char_dict[key]).difference({char})
         style_chars = sample(list(style_chars), self.n_in_s)
         style_imgs = torch.stack([self.get_Greyimg(key, c) for c in style_chars]) # 3, 128, 128, 1
 
-        char_img = self.render_from_source(char) # 128, 128, 3
-        grey_char_img = self.render_from_source_Grey(char) # 128, 128, 1
+        if self.extension == "ttf":
+            char_img = self.render_from_source(char) # 128, 128, 3
+            grey_char_img = self.render_from_source_Grey(char) # 128, 128, 1
+        else:
+            char_img = self.read_from_source(char) # 128, 128, 3
+            grey_char_img = self.read_from_sourceGrey(char) # 128, 128, 1
 
         example = dict()
         example["image"] = trg_img # 128, 128, 3
